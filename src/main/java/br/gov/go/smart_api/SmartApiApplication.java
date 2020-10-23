@@ -7,11 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.oauth2.client.EnableOAuth2Sso;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-@EnableOAuth2Sso
 public class SmartApiApplication {
     private static final Logger log = LoggerFactory.getLogger(SmartApiApplication.class);
 
