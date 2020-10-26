@@ -17,12 +17,16 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
 
+xacml:
+  pdp:
+    url:
+      entitlement:
+        service: https://localhost:9443/api/identity/entitlement/decision
 
 logging:
   level:
     root: INFO
-    org.springframework.web: INFO
+    org.springframework.web: debug
     org.springframework.security: debug
-    org.springframework.boot.autoconfigure: DEBUG
-    org.springframework.web.reactive.function.client.ExchangeFunctions: DEBUG
-    reactor.netty.http.client: DEBUG
+    org.springframework.boot.autoconfigure: debug
+    org.springframework.web.reactive.function.client.ExchangeFunctions: debug

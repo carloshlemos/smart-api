@@ -1,0 +1,22 @@
+{
+  "menu-policy": {
+    "Request": {
+      "AccessSubject": {
+        "Attribute": [
+          {
+            "AttributeId": "subject-id",
+            "Value": "${username}"
+          }
+        ]
+      },
+      "Action": {
+        "Attribute": [
+          {
+            "AttributeId": "urn:oasis:names:tc:xacml:1.0:action:action-id",
+            "Value": "${actionid}"
+          }
+        ]
+      }
+    }
+  }
+}
