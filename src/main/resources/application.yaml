@@ -13,7 +13,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: https://localhost:9443/oauth2/token
+          issuer-uri: https://ssohomolog.go.gov.br/oauth2/token
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
 
@@ -21,7 +21,7 @@ xacml:
   pdp:
     url:
       entitlement:
-        service: https://localhost:9443/api/identity/entitlement/decision
+        service: https://ssohomolog.go.gov.br/api/identity/entitlement/decision
 
 logging:
   level:
