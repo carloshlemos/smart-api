@@ -1,10 +1,10 @@
 {
-  "menu-policy": {
+  "perfil_portal-policy": {
     "Request": {
       "AccessSubject": {
         "Attribute": [
           {
-            "AttributeId": "subject-id",
+            "AttributeId": "urn:oasis:names:tc:xacml:1.0:subject:subject-id",
             "Value": "${username}"
           }
         ]

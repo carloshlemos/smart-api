@@ -27,7 +27,7 @@ public class MenuController {
     })
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    @PreAuthorize("hasPermission('menu-policy','{actionid:BemPermanente.C}')")
+    @PreAuthorize("hasPermission('perfil_portal-policy','{actionid:Menu.C}')")
     public Iterable<MenuItem> getMenu() {
         return menuItemRepository.findAll();
     }
