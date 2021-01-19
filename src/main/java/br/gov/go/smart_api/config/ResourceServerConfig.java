@@ -6,36 +6,23 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @EnableWebSecurity
 public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
-
-    private static final String AUTHORITY_PREFIX = "ROLE_";
-    private static final String CLAIM_ROLES = "roles";
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/apis/id/**", "/csrf", "/v2/api-docs", "/swagger-resources/configuration/ui",
-                        "/configuration/ui", "/swagger-resources", "/configuration/security", "/swagger-ui.html", "/webjars/**",
-                        "/swagger-resources/configuration/ui", "/swagger-resources/configuration/security", "/configuration/security").permitAll()
-                //.anyRequest().denyAll()
+                .antMatchers("/apis/id/**").permitAll()
+                .antMatchers("/csrf").permitAll()
+                .antMatchers("/v2/api-docs").permitAll()
+                .antMatchers("/swagger-resources/configuration/ui").permitAll()
+                .antMatchers("/configuration/ui").permitAll()
+                .antMatchers("/configuration/security").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/webjars/**").permitAll()
+                .antMatchers("/swagger-resources/configuration/ui").permitAll()
+                .antMatchers("/swagger-resources/configuration/security").permitAll()
+                .antMatchers("/configuration/security").permitAll()
+                .antMatchers("/h2-console/**").permitAll()
                 .and()
                 .oauth2ResourceServer()
                 .jwt();
-//                .oauth2ResourceServer(oauth2ResourceServer ->
-//                        oauth2ResourceServer
-//                                .jwt(jwt ->
-//                                        jwt.jwtAuthenticationConverter(getJwtAuthenticationConverter())));
     }
-
-//    private Converter<Jwt, AbstractAuthenticationToken> getJwtAuthenticationConverter() {
-//        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-//        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(getJwtGrantedAuthoritiesConverter());
-//        return jwtAuthenticationConverter;
-//    }
-//
-//    private Converter<Jwt, Collection<GrantedAuthority>> getJwtGrantedAuthoritiesConverter() {
-//        JwtGrantedAuthoritiesConverter converter = new JwtGrantedAuthoritiesConverter();
-//        converter.setAuthorityPrefix(AUTHORITY_PREFIX);
-//        converter.setAuthoritiesClaimName(CLAIM_ROLES);
-//        return converter;
-//    }
 }
