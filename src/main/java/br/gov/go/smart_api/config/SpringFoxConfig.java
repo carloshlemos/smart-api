@@ -63,8 +63,16 @@ public class SpringFoxConfig extends WebMvcConfigurationSupport {
     private List<ResponseMessage> responseMessageForGET() {
         return new ArrayList<ResponseMessage>() {{
             add(new ResponseMessageBuilder()
+                    .code(401)
+                    .message("Unauthorized!")
+                    .build());
+            add(new ResponseMessageBuilder()
                     .code(403)
                     .message("Forbidden!")
+                    .build());
+            add(new ResponseMessageBuilder()
+                    .code(500)
+                    .message("Internal Server Error!")
                     .build());
         }};
     }

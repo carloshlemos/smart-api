@@ -20,12 +20,6 @@ public class MenuController {
     private MenuItemRepository menuItemRepository;
 
     @ApiOperation(value = "Lista todos os itens do Menu")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Retorna a lista de itens de Menu"),
-            @ApiResponse(code = 403, message = "Você não tem permissão para acessar este recurso"),
-            @ApiResponse(code = 500, message = "Foi gerada uma exceção"),
-    })
-
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasPermission('perfil_portal-policy','{actionid:Menu.C}')")
     public Iterable<MenuItem> getMenu() {
