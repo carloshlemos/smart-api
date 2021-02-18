@@ -4,6 +4,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
+/**
+ * @author Carlos Henrique Lemos
+ */
 @EnableWebSecurity
 public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
     @Override
