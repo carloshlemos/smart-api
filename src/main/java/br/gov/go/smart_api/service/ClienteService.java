@@ -1,5 +1,6 @@
 package br.gov.go.smart_api.service;
 
+import br.gov.go.smart_api.annotation.Historico;
 import br.gov.go.smart_api.domain.Cliente;
 import br.gov.go.smart_api.domain.utils.PagingResponse;
 import br.gov.go.smart_api.repository.ClienteRepository;
@@ -29,18 +30,21 @@ public class ClienteService extends AbstractService {
         return repository.findById(id);
     }
 
+    @Historico
     public Cliente createCliente(Cliente cliente) {
         return repository.save(cliente);
     }
 
+    @Historico
     public Optional<Cliente> updateCliente(Long id, Cliente cliente) {
         repository.save(cliente);
         return findById(id);
     }
 
+    @Historico
     public void deleteClienteById(Long id) {
         repository.deleteById(id);
-    }
+    }pinta
 
     /**
      * get element using Criteria.
