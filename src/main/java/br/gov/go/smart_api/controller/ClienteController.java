@@ -10,7 +10,6 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
-import java.util.Optional;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -35,12 +33,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Api(value = "Retorna dados de Clientes.")
 public class ClienteController extends AbstractController {
 
-    private static final String NEW_CLIENTE_LOG = "New cliente was created id:{}";
-    private static final String CLIENTE_UPDATED_LOG = "Cliente:{} was updated";
-    private static final String CLIENTE_DELETE_LOG = "Cliente:{} was deleted";
-
-    @Autowired
-    private ClienteService service;
+    public ClienteController(final ClienteService service) {
+        super(service);
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
@@ -61,39 +56,27 @@ public class ClienteController extends AbstractController {
     @GetMapping(path = "/{clienteId}")
     @PreAuthorize("hasPermission('perfil_portal-policy','{actionid:Cliente.C}')")
     public ResponseEntity<Cliente> getById(@PathVariable(value = "clienteId") Long id) {
-        final Optional<Cliente> cliente = service.findById(id);
-        if (cliente.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(cliente.get());
+        return super.getByID(id);
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasPermission('perfil_portal-policy','{actionid:Cliente.I}')")
     public ResponseEntity<Cliente> createCliente(
             @Valid @RequestBody Cliente cliente) {
-        final Cliente createdCliente = service.createCliente(cliente);
-        log.info(NEW_CLIENTE_LOG, createdCliente.toString());
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdCliente);
+        return super.create(cliente);
     }
 
     @PutMapping(path = "/{clienteId}", consumes = APPLICATION_JSON_VALUE)
     @PreAuthorize("hasPermission('perfil_portal-policy','{actionid:Cliente.A}')")
     public ResponseEntity<Cliente> updateCliente(
             @PathVariable(value = "clienteId") Long id, @Valid @RequestBody Cliente cliente) {
-        final Optional<Cliente> updatedCliente = service.updateCliente(id, cliente);
-        if (updatedCliente.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        log.info(CLIENTE_UPDATED_LOG, updatedCliente.toString());
-        return ResponseEntity.ok(updatedCliente.get());
+       return super.update(id, cliente);
     }
 
     @DeleteMapping("/{clienteId}")
     @PreAuthorize("hasPermission('perfil_portal-policy','{actionid:Cliente.E}')")
     public ResponseEntity<String> deleteCliente(@PathVariable Long id) {
-        log.info(CLIENTE_DELETE_LOG, id.toString());
-        service.deleteClienteById(id);
+        super.delete(id);
         return ResponseEntity.ok("Cliente was deleted!!!");
     }
 }
