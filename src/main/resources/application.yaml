@@ -1,0 +1,33 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /smart-api
+
+spring:
+  datasource:
+    url: jdbc:oracle:thin:@//exa01-scan7.intra.goias.gov.br:1521/dbdes
+    driver-class-name: oracle.jdbc.OracleDriver
+    username: dotuser
+    password: d4fJU96!#aQ
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://ssodesenv.go.gov.br:443/oauth2/token
+  jpa:
+    database-platform: org.hibernate.dialect.Oracle12cDialect
+    show-sql: true
+
+xacml:
+  pdp:
+    url:
+      entitlement:
+        service: https://ssodesenv.go.gov.br/api/identity/entitlement/decision
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: debug
+    org.springframework.security: debug
+    org.springframework.boot.autoconfigure: debug
+    org.springframework.web.reactive.function.client.ExchangeFunctions: debug
