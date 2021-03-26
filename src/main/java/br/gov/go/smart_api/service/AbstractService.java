@@ -1,6 +1,5 @@
 package br.gov.go.smart_api.service;
 
-import br.gov.go.smart_api.domain.utils.BaseEntity;
 import br.gov.go.smart_api.domain.utils.PagingHeaders;
 import br.gov.go.smart_api.domain.utils.PagingResponse;
 import br.gov.go.smart_api.repository.JpaRepo;
@@ -18,15 +17,15 @@ import java.util.Optional;
 /**
  * @author Carlos Henrique Lemos
  */
-public class AbstractService<T extends BaseEntity> {
+public abstract class AbstractService<T, ID> {
 
-    protected final JpaRepo<T> repository;
+    protected final JpaRepo<T, ID> repository;
 
-    protected AbstractService(JpaRepo<T> repository) {
+    protected AbstractService(JpaRepo<T, ID> repository) {
         this.repository = repository;
     }
 
-    public Optional<T> findById(Long id) {
+    public Optional<T> findById(ID id) {
         return repository.findById(id);
     }
 
@@ -34,12 +33,12 @@ public class AbstractService<T extends BaseEntity> {
         return repository.save(entity);
     }
 
-    public Optional<T> update(Long id, T entity) {
+    public Optional<T> update(ID id, T entity) {
         repository.save(entity);
         return findById(id);
     }
 
-    public void deleteById(Long id) {
+    public void deleteById(ID id) {
         repository.deleteById(id);
     }
 

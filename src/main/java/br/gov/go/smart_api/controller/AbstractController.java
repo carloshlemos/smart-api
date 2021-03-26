@@ -1,6 +1,5 @@
 package br.gov.go.smart_api.controller;
 
-import br.gov.go.smart_api.domain.utils.BaseEntity;
 import br.gov.go.smart_api.domain.utils.PagingHeaders;
 import br.gov.go.smart_api.domain.utils.PagingResponse;
 import br.gov.go.smart_api.service.AbstractService;
@@ -16,16 +15,16 @@ import java.util.Optional;
 /**
  * @author Carlos Henrique Lemos
  */
-public abstract class AbstractController<T extends BaseEntity> {
+public abstract class AbstractController<T, ID> {
 
-    protected final AbstractService<T> service;
+    protected final AbstractService<T, ID> service;
 
-    public AbstractController(@NonNull AbstractService<T> service) {
+    public AbstractController(@NonNull AbstractService<T, ID> service) {
         this.service = service;
     }
 
     @NonNull
-    public ResponseEntity<T> getByID(@NonNull Long id) {
+    public ResponseEntity<T> getByID(@NonNull ID id) {
         final Optional<T> entity = service.findById(id);
         if (entity.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -39,12 +38,12 @@ public abstract class AbstractController<T extends BaseEntity> {
     }
 
     @NonNull
-    public ResponseEntity<T> update(@NonNull Long id, @NonNull T request) {
+    public ResponseEntity<T> update(@NonNull ID id, @NonNull T request) {
         return (ResponseEntity)this.service.update(id, request).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     @NonNull
-    public void delete(@NonNull Long id) {
+    public void delete(@NonNull ID id) {
         this.service.deleteById(id);
     }
 

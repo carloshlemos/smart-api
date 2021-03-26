@@ -22,11 +22,13 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * @see 'https://stackoverflow.com/questions/52355490/no-primary-or-default-constructor-found-for-interface-org-springframework-data-d'
  * @author Carlos Henrique Lemos
  */
 @Configuration
 @EnableSwagger2
 public class SpringFoxConfig implements WebMvcConfigurer {
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2).select()
@@ -94,11 +96,17 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 
     private ApiInfo apiInfo() {
 
-        return new ApiInfoBuilder().title("SMART - API").description("[ Base URL: smart-api.go.gov.br/api/1.0.0 ]")
+        return new ApiInfoBuilder()
+                .title("SMART - API").
+                description("[ Base URL: smart-api.go.gov.br/api/1.0.0 ]")
                 .termsOfServiceUrl("http://springfox.io")
-                .contact(new Contact("Responsável", "https://departamento", "email"))
+                .contact(new Contact("Arquitetura da Subcretaria de Tecnologia da Informação"
+                        , "https://github.com/OAI/OpenAPI-Specification/blob/master/versions/2.0.md"
+                        , "governancasoa.sti.sedi"))
                 .license("Apache License Version 2.0")
-                .licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE").version("0.0.1").build();
+                .licenseUrl("https://github.com/springfox/springfox/blob/master/LICENSE")
+                .version("1.0.0")
+                .build();
     }
 
     private SecurityContext securityContext() {

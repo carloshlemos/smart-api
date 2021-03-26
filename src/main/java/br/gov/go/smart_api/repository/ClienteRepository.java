@@ -5,5 +5,5 @@ import br.gov.go.smart_api.domain.Cliente;
 /**
  * @author Carlos Henrique Lemos
  */
-public interface ClienteRepository extends JpaRepo<Cliente> {
+public interface ClienteRepository extends JpaRepo<Cliente, Long> {
 }

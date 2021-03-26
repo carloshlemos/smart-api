@@ -1,6 +1,8 @@
 package br.gov.go.smart_api.controller;
 
 import br.gov.go.smart_api.domain.Cliente;
+import br.gov.go.smart_api.domain.dto.ClienteDTO;
+import br.gov.go.smart_api.domain.mapper.ClienteMapper;
 import br.gov.go.smart_api.domain.utils.PagingResponse;
 import br.gov.go.smart_api.service.ClienteService;
 import io.swagger.annotations.Api;
@@ -10,6 +12,7 @@ import net.kaczmarzyk.spring.data.jpa.domain.Equal;
 import net.kaczmarzyk.spring.data.jpa.domain.Like;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.And;
 import net.kaczmarzyk.spring.data.jpa.web.annotation.Spec;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +23,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -33,6 +38,9 @@ import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 @Api(value = "Retorna dados de Clientes.")
 public class ClienteController extends AbstractController {
 
+    @Autowired
+    private ClienteMapper mapper;
+
     public ClienteController(final ClienteService service) {
         super(service);
     }
@@ -41,7 +49,7 @@ public class ClienteController extends AbstractController {
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "Retorna dados de Clientes de forma paginada", notes = "Retorna dados de Clientes forma paginada")
     @PreAuthorize("hasPermission('perfil_portal-policy','{actionid:Cliente.C}')")
-    public ResponseEntity<List<Cliente>> getClientes(
+    public ResponseEntity<List<ClienteDTO>> getClientes(
             @And({
                     @Spec(path = "nome", params = "nome", spec = Like.class),
                     @Spec(path = "numeroCPF", params = "numeroCPF", spec = Equal.class)
@@ -49,7 +57,8 @@ public class ClienteController extends AbstractController {
             Sort sort,
             @RequestHeader HttpHeaders headers) {
         final PagingResponse response = service.get(specCliente, headers, sort);
-        return new ResponseEntity(response.getElements(), returnHttpHeaders(response), HttpStatus.OK);
+        return new ResponseEntity(response.getElements().stream().map(cliente -> mapper.toClienteDTO((Cliente) cliente))
+                .collect(Collectors.toList()), returnHttpHeaders(response), HttpStatus.OK);
     }
 
     @ApiOperation(value = "Retorna dados do Cliente por ID", notes = "Retorna dados do Cliente por ID")
@@ -70,7 +79,7 @@ public class ClienteController extends AbstractController {
     @PreAuthorize("hasPermission('perfil_portal-policy','{actionid:Cliente.A}')")
     public ResponseEntity<Cliente> updateCliente(
             @PathVariable(value = "clienteId") Long id, @Valid @RequestBody Cliente cliente) {
-       return super.update(id, cliente);
+        return super.update(id, cliente);
     }
 
     @DeleteMapping("/{clienteId}")

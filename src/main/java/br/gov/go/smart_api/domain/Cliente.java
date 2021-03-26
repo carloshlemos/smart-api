@@ -1,10 +1,10 @@
 package br.gov.go.smart_api.domain;
 
-import br.gov.go.smart_api.domain.utils.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author Carlos Henrique Lemos
@@ -13,7 +13,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "DOT_CLIENTE")
 @ApiModel(value = "Cliente", description = "Informações de Cliente")
-public class Cliente extends BaseEntity {
+public class Cliente implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID_CLIENTE", nullable = false)

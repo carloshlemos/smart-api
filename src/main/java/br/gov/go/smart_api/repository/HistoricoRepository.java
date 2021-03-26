@@ -1,6 +1,5 @@
 package br.gov.go.smart_api.repository;
 
-import gov.goias.excecao.InfraException;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -29,7 +28,7 @@ public class HistoricoRepository {
             storedProcedure.setParameter(1, usuario);
             storedProcedure.execute();
         } catch (Exception e) {
-            throw new InfraException("Houve um erro ao tentar atribuir o usuário na sessão de auditoria", e);
+            throw new RuntimeException("Houve um erro ao tentar atribuir o usuário na sessão de auditoria", e);
         }
     }
 

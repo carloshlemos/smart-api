@@ -1,6 +1,5 @@
 package br.gov.go.smart_api.repository;
 
-import br.gov.go.smart_api.domain.utils.BaseEntity;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -14,14 +13,14 @@ import java.util.Optional;
  */
 @Transactional
 @NoRepositoryBean
-public interface JpaRepo<T extends BaseEntity> extends PagingAndSortingRepository<T, Long>, JpaSpecificationExecutor<T> {
+public interface JpaRepo<T, ID> extends PagingAndSortingRepository<T, ID>, JpaSpecificationExecutor<T> {
     @Transactional(
             readOnly = true
     )
     @NonNull
-    Optional<T> getToDeleteById(@NonNull Long var1);
+    Optional<T> getToDeleteById(@NonNull ID var1);
 
-    default Optional<T> del(@NonNull Long id) {
+    default Optional<T> del(@NonNull ID id) {
         return this.getToDeleteById(id).map((found) -> {
             this.delete(found);
             return found;

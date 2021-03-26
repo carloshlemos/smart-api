@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class ClienteService extends AbstractService<Cliente> {
+public class ClienteService extends AbstractService<Cliente, Long> {
 
     protected ClienteService(final ClienteRepository repository) {
         super(repository);
